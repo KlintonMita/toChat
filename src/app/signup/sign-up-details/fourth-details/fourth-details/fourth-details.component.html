@@ -1,0 +1,36 @@
+<div class="main">
+  <div class="container">
+    <h1>Sign Up</h1>
+
+    <div class="container-menu">
+      <div class="first-container">
+        <h2>Profile Photo</h2>
+
+        <div class="photo-wrapper">
+          <img
+            *ngIf="imagePreview"
+            [src]="imagePreview"
+            class="preview"
+            alt="Profile Photo"
+          />
+
+          <label *ngIf="!imagePreview" class="upload-placeholder">
+            +
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              hidden
+            />
+          </label>
+
+          <span *ngIf="imagePreview" class="remove-btn" (click)="removeImage()"
+            >×</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <button (click)="next()">Next</button>
+  </div>
+</div>
