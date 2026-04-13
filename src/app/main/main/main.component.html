@@ -1,19 +1,185 @@
 <div class="main">
-  <div class="main-container">
+  <mat-card class="main-container">
     <div class="first-container">
       <div class="first-container-beggining">
-        <img src="../../../assets/icons/fire.png">
+        <img src="../../../assets/icons/fire.png" alt="logo">
         <h1>ToChat</h1>
       </div>
+
       <div class="first-container-middle">
-        <a href="#">Pricing</a>
-        <a href="#">Messages</a>
-        <a href="#">Notifications</a>
+        <div class="search-wrapper">
+          <img src="../../../assets/icons/search.png" class="search-icon" alt="search">
+          <input type="text" placeholder="Search..." class="searchBar">
+        </div>
       </div>
+
       <div class="first-container-end">
-        <a class="end-first" href="#"><img src="../../../assets/icons/search.png"></a>
-        <a class="end-second" href=""><img src="../../../assets/safety.png"></a>
+        <button mat-icon-button class="top-icon">
+          <mat-icon>notifications</mat-icon>
+        </button>
+
+        <a [matMenuTriggerFor]="menu" mat-mini-fab class="end-second">
+          <img src="../../../assets/safety.png" alt="profile">
+        </a>
+
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Sign Out</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
-  </div>
+
+    <div class="content-container">
+      <div class="second-container">
+        <div class="side-menu">
+          <button class="menu-item active">
+            <mat-icon>explore</mat-icon>
+            <span>Discover</span>
+          </button>
+
+          <button class="menu-item">
+            <mat-icon>favorite</mat-icon>
+            <span>Matches</span>
+          </button>
+
+          <button class="menu-item">
+            <mat-icon>chat_bubble</mat-icon>
+            <span>Messages</span>
+          </button>
+
+          <button class="menu-item">
+            <mat-icon>thumb_up</mat-icon>
+            <span>Likes</span>
+          </button>
+
+          <button class="menu-item">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+        </div>
+
+        <div class="bottom-menu">
+          <button class="menu-item small">
+            <mat-icon>settings</mat-icon>
+            <span>Settings</span>
+          </button>
+
+          <button class="menu-item small">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="third-container">
+        <div class="cards-stack">
+          <div class="bg-card bg-card-1"></div>
+          <div class="bg-card bg-card-2"></div>
+
+          <mat-card class="profile-card">
+            <div class="profile-image">
+              <img src="../../../assets/profile-demo.jpg" alt="profile">
+
+              <div class="profile-overlay">
+                <h2>Anna, 25</h2>
+                <p><mat-icon>location_on</mat-icon> New York, 5 miles away</p>
+              </div>
+            </div>
+
+            <div class="profile-info">
+              <p class="bio">
+                Traveler, foodie, and dog lover. Looking for someone to share adventures with!
+              </p>
+
+              <div class="tags">
+                <span>Traveler</span>
+                <span>Dog Lover</span>
+                <span>Coffee Addict</span>
+              </div>
+
+              <div class="actions">
+                <button class="action-btn close">
+                  <mat-icon>close</mat-icon>
+                </button>
+
+                <button class="action-btn rewind">
+                  <mat-icon>undo</mat-icon>
+                </button>
+
+                <button class="action-btn like">
+                  <mat-icon>favorite</mat-icon>
+                </button>
+
+                <button class="action-btn star">
+                  <mat-icon>star</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <div class="right-container">
+        <mat-card class="info-card">
+          <h3>New Matches</h3>
+          <div class="match-list">
+            <div class="match-item">
+              <img src="../../../assets/match1.jpg" alt="Sophie">
+              <span>Sophie</span>
+            </div>
+            <div class="match-item">
+              <img src="../../../assets/match2.jpg" alt="Mike">
+              <span>Mike</span>
+            </div>
+            <div class="match-item">
+              <img src="../../../assets/match3.jpg" alt="Emma">
+              <span>Emma</span>
+            </div>
+            <div class="match-item">
+              <div class="more">+3</div>
+              <span>More</span>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="info-card">
+          <h3>Messages</h3>
+
+          <div class="message-item">
+            <img src="../../../assets/match2.jpg" alt="John">
+            <div>
+              <h4>John</h4>
+              <p>Hey! How's it going?</p>
+            </div>
+          </div>
+
+          <div class="message-item">
+            <img src="../../../assets/match1.jpg" alt="Emily">
+            <div>
+              <h4>Emily</h4>
+              <p>Are you free tonight?</p>
+            </div>
+          </div>
+
+          <div class="message-item">
+            <img src="../../../assets/match3.jpg" alt="Alex">
+            <div>
+              <h4>Alex</h4>
+              <p>Sent a photo</p>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </mat-card>
 </div>
