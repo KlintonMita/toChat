@@ -4,17 +4,38 @@
     <div class="container-menu">
       <div class="first-container">
         <h2>Nationality</h2>
-        <input type="text" placeholder="Nationality" class="nameInput" >
+        <input
+          type="text"
+          placeholder="Nationality"
+          class="nameInput"
+          [(ngModel)]="signupState.data.nationality"
+        >
+        <p class="error" *ngIf="errors.nationality">{{ errors.nationality }}</p>
       </div>
+
       <div class="second-container">
         <h2>Residence</h2>
-        <input type="text" placeholder="Residence" class="surnameInput">
+        <input
+          type="text"
+          placeholder="Residence"
+          class="surnameInput"
+          [(ngModel)]="signupState.data.residence"
+        >
+        <p class="error" *ngIf="errors.residence">{{ errors.residence }}</p>
       </div>
+
       <div class="third-container">
         <h2>Kids</h2>
-        <input type="text" placeholder="Kids" class="ageInput">
+        <input
+          type="text"
+          placeholder="Kids"
+          class="ageInput"
+          [(ngModel)]="signupState.data.kids"
+        >
+        <p class="error" *ngIf="errors.kids">{{ errors.kids }}</p>
       </div>
     </div>
+
     <button (click)="next()">Next</button>
   </div>
 </div>

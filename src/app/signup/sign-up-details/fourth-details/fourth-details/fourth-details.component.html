@@ -4,17 +4,17 @@
 
     <div class="container-menu">
       <div class="first-container">
-        <h2>Profile Photo</h2>
+        <h2>Profile Photo (Optional)</h2>
 
         <div class="photo-wrapper">
           <img
-            *ngIf="imagePreview"
-            [src]="imagePreview"
+            *ngIf="signupState.data.imagePreview"
+            [src]="signupState.data.imagePreview"
             class="preview"
             alt="Profile Photo"
           />
 
-          <label *ngIf="!imagePreview" class="upload-placeholder">
+          <label *ngIf="!signupState.data.imagePreview" class="upload-placeholder">
             +
             <input
               type="file"
@@ -24,13 +24,21 @@
             />
           </label>
 
-          <span *ngIf="imagePreview" class="remove-btn" (click)="removeImage()"
-            >×</span
+          <span
+            *ngIf="signupState.data.imagePreview"
+            class="remove-btn"
+            (click)="removeImage()"
           >
+            ×
+          </span>
         </div>
       </div>
     </div>
 
-    <button (click)="next()">Next</button>
+    <button (click)="finishSignup()" [disabled]="loading">
+      {{ loading ? 'Creating account...' : 'Finish Sign Up' }}
+    </button>
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
   </div>
 </div>

@@ -22,6 +22,7 @@ export const routes: Routes = [
   {path: 'impressum', component: ImpressumComponent},
   {path: 'termsC', component: TermsAndConditionsComponent},
   {path: 'pPolicy', component:PrivacyPolicyComponent},
+  {path: 'signUp', component: SignupComponent},
   {path: 'sDetails', component: SignUpDetailsComponent},
   {path: 'secondDetails', component: SecondDetailsComponent},
   {path: 'thirdDetails', component: ThirdDetailsComponent},

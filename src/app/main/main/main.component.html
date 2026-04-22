@@ -2,36 +2,37 @@
   <mat-card class="main-container">
     <div class="first-container">
       <div class="first-container-beggining">
-        <img src="../../../assets/icons/fire.png" alt="logo">
+        <img src="assets/icons/fire.png" alt="logo">
         <h1>ToChat</h1>
       </div>
 
       <div class="first-container-middle">
         <div class="search-wrapper">
-          <img src="../../../assets/icons/search.png" class="search-icon" alt="search">
+          <img src="assets/icons/search.png" class="search-icon" alt="search">
           <input type="text" placeholder="Search..." class="searchBar">
         </div>
       </div>
 
       <div class="first-container-end">
-        <button mat-icon-button class="top-icon">
-          <mat-icon>notifications</mat-icon>
-        </button>
+        <button
+        mat-icon-button
+        class="mobile-menu-toggle"
+        (click)="mobileMenuOpen = !mobileMenuOpen"
+        aria-label="Open menu">
+        <mat-icon>{{ mobileMenuOpen ? 'close' : 'menu' }}</mat-icon>
+      </button>
 
         <a [matMenuTriggerFor]="menu" mat-mini-fab class="end-second">
-          <img src="../../../assets/safety.png" alt="profile">
+          <img [src]="profileImage" alt="profile">
         </a>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="setActiveTab('profile')">
             <mat-icon>person</mat-icon>
             <span>Profile</span>
           </button>
-          <button mat-menu-item>
-            <mat-icon>settings</mat-icon>
-            <span>Settings</span>
-          </button>
-          <button mat-menu-item>
+
+          <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Sign Out</span>
           </button>
@@ -40,41 +41,52 @@
     </div>
 
     <div class="content-container">
-      <div class="second-container">
+      <div class="second-container" [class.mobile-open]="mobileMenuOpen">
         <div class="side-menu">
-          <button class="menu-item active">
+          <button
+            class="menu-item"
+            [class.active]="activeTab === 'discover'"
+            (click)="setActiveTab('discover'); mobileMenuOpen = false">
             <mat-icon>explore</mat-icon>
             <span>Discover</span>
           </button>
 
-          <button class="menu-item">
+          <button
+            class="menu-item"
+            [class.active]="activeTab === 'matches'"
+            (click)="setActiveTab('matches'); mobileMenuOpen = false">
             <mat-icon>favorite</mat-icon>
             <span>Matches</span>
           </button>
 
-          <button class="menu-item">
+          <button
+            class="menu-item"
+            [class.active]="activeTab === 'messages'"
+            (click)="setActiveTab('messages'); mobileMenuOpen = false">
             <mat-icon>chat_bubble</mat-icon>
             <span>Messages</span>
           </button>
 
-          <button class="menu-item">
+          <button
+            class="menu-item"
+            [class.active]="activeTab === 'likes'"
+            (click)="setActiveTab('likes'); mobileMenuOpen = false">
             <mat-icon>thumb_up</mat-icon>
             <span>Likes</span>
           </button>
 
-          <button class="menu-item">
+          <button
+            class="menu-item"
+            [class.active]="activeTab === 'profile'"
+            (click)="setActiveTab('profile'); mobileMenuOpen = false">
             <mat-icon>person</mat-icon>
             <span>Profile</span>
           </button>
         </div>
 
         <div class="bottom-menu">
-          <button class="menu-item small">
-            <mat-icon>settings</mat-icon>
-            <span>Settings</span>
-          </button>
 
-          <button class="menu-item small">
+          <button class="menu-item small" (click)="logout(); mobileMenuOpen = false">
             <mat-icon>logout</mat-icon>
             <span>Logout</span>
           </button>
@@ -82,72 +94,185 @@
       </div>
 
       <div class="third-container">
-        <div class="cards-stack">
-          <div class="bg-card bg-card-1"></div>
-          <div class="bg-card bg-card-2"></div>
+        <div *ngIf="errorMessage" class="error-box">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
 
-          <mat-card class="profile-card">
-            <div class="profile-image">
-              <img src="../../../assets/profile-demo.jpg" alt="profile">
+        <ng-container [ngSwitch]="activeTab">
+          <!-- DISCOVER -->
+          <div *ngSwitchCase="'discover'" class="content-view">
+            <h2 class="section-title">Discover People</h2>
 
-              <div class="profile-overlay">
-                <h2>Anna, 25</h2>
-                <p><mat-icon>location_on</mat-icon> New York, 5 miles away</p>
-              </div>
+            <div class="grid-list">
+              <mat-card class="grid-card" *ngFor="let user of discoverUsers">
+                <img [src]="user.photoURL || 'assets/profile-demo.jpg'" [alt]="user.firstName">
+
+                <h3>{{ user.firstName }} {{ user.lastName }}, {{ user.age }}</h3>
+                <p>{{ user.residence }}</p>
+                <p>{{ user.hobby }}</p>
+                <p>{{ user.favoriteMovie }}</p>
+
+                <div class="discover-actions">
+                  <button mat-raised-button color="primary" (click)="likeUser(user)">
+                    Like
+                  </button>
+
+                  <button mat-raised-button (click)="openChatFromDiscover(user)">
+                    Message
+                  </button>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+
+          <!-- MATCHES -->
+          <div *ngSwitchCase="'matches'" class="content-view">
+            <h2 class="section-title">Your Matches</h2>
+
+            <div class="grid-list">
+              <mat-card class="grid-card" *ngFor="let match of matches">
+                <img [src]="match.image || 'assets/profile-demo.jpg'" [alt]="match.name">
+                <h3>{{ match.name }}, {{ match.age }}</h3>
+                <p>{{ match.residence }}</p>
+
+                <button mat-raised-button color="primary" (click)="openChatFromMatch(match)">
+                  Open Chat
+                </button>
+              </mat-card>
+            </div>
+          </div>
+
+          <!-- MESSAGES -->
+          <div *ngSwitchCase="'messages'" class="content-view messages-layout">
+            <div class="messages-sidebar">
+              <h2 class="section-title">Conversations</h2>
+
+              <mat-card class="list-card">
+                <div
+                  class="message-row conversation-row"
+                  *ngFor="let convo of conversations"
+                  (click)="openConversation(convo)">
+                  <img [src]="getConversationImage(convo)" [alt]="getConversationName(convo)">
+
+                  <div class="message-text">
+                    <h4>{{ getConversationName(convo) }}</h4>
+                    <p>{{ convo.lastMessage || 'Start the conversation...' }}</p>
+                  </div>
+                </div>
+              </mat-card>
             </div>
 
-            <div class="profile-info">
-              <p class="bio">
-                Traveler, foodie, and dog lover. Looking for someone to share adventures with!
-              </p>
+            <div class="messages-chat">
+              <h2 class="section-title">
+                {{ selectedChatUser ? (selectedChatUser.firstName + ' ' + selectedChatUser.lastName) : '' }}
+              </h2>
 
-              <div class="tags">
-                <span>Traveler</span>
-                <span>Dog Lover</span>
-                <span>Coffee Addict</span>
-              </div>
+              <mat-card class="chat-card">
+                <div class="chat-messages" *ngIf="selectedChatUser; else noChatSelected">
+                  <div
+                    class="chat-bubble"
+                    *ngFor="let msg of chatMessages"
+                    [class.mine]="msg.senderId === currentUser?.uid">
+                    {{ msg.text }}
+                  </div>
+                </div>
 
-              <div class="actions">
-                <button class="action-btn close">
-                  <mat-icon>close</mat-icon>
-                </button>
+                <ng-template #noChatSelected>
 
-                <button class="action-btn rewind">
-                  <mat-icon>undo</mat-icon>
-                </button>
+                </ng-template>
 
-                <button class="action-btn like">
-                  <mat-icon>favorite</mat-icon>
-                </button>
+                <div class="chat-input" *ngIf="selectedChatUser">
+                  <input
+                    type="text"
+                    [(ngModel)]="newMessage"
+                    (keyup.enter)="sendMessage()"
+                    placeholder="Type your message..."
+                    class="searchBar">
 
-                <button class="action-btn star">
-                  <mat-icon>star</mat-icon>
-                </button>
-              </div>
+                  <button mat-raised-button color="primary" (click)="sendMessage()">
+                    Send
+                  </button>
+                </div>
+              </mat-card>
             </div>
-          </mat-card>
-        </div>
+          </div>
+
+          <!-- LIKES -->
+          <div *ngSwitchCase="'likes'" class="content-view">
+            <h2 class="section-title">People Connected With You</h2>
+
+            <div class="grid-list">
+              <mat-card class="grid-card" *ngFor="let person of likes">
+                <img [src]="person.image || 'assets/profile-demo.jpg'" [alt]="person.name">
+                <h3>{{ person.name }}</h3>
+                <p>{{ person.residence }}</p>
+                <button mat-raised-button color="accent" (click)="openChatFromMatch(person)">
+                  Message
+                </button>
+              </mat-card>
+            </div>
+          </div>
+
+          <!-- PROFILE -->
+          <div *ngSwitchCase="'profile'" class="content-view">
+            <h2 class="section-title">My Profile</h2>
+
+            <mat-card class="profile-details-card" *ngIf="currentUser">
+              <img [src]="profileImage" [alt]="fullName" class="profile-preview">
+
+              <div class="profile-details" *ngIf="!editMode">
+                <h3>{{ fullName }}, {{ currentUser.age }}</h3>
+                <p class="location">{{ currentUser.residence }}</p>
+                <p><strong>Email:</strong> {{ currentUser.email }}</p>
+                <p><strong>Nationality:</strong> {{ currentUser.nationality }}</p>
+                <p><strong>Kids:</strong> {{ currentUser.kids }}</p>
+                <p><strong>Favorite Movie:</strong> {{ currentUser.favoriteMovie }}</p>
+                <p><strong>Hobby:</strong> {{ currentUser.hobby }}</p>
+                <p><strong>Smoker:</strong> {{ currentUser.smoker }}</p>
+
+                <button mat-raised-button color="primary" (click)="editMode = true">
+                  Edit Profile
+                </button>
+              </div>
+
+              <div class="profile-details edit-form" *ngIf="editMode">
+                <input [(ngModel)]="profileForm.firstName" type="text" placeholder="First name" class="searchBar">
+                <input [(ngModel)]="profileForm.lastName" type="text" placeholder="Last name" class="searchBar">
+                <input [(ngModel)]="profileForm.age" type="text" placeholder="Age" class="searchBar">
+                <input [(ngModel)]="profileForm.nationality" type="text" placeholder="Nationality" class="searchBar">
+                <input [(ngModel)]="profileForm.residence" type="text" placeholder="Residence" class="searchBar">
+                <input [(ngModel)]="profileForm.kids" type="text" placeholder="Kids" class="searchBar">
+                <input [(ngModel)]="profileForm.favoriteMovie" type="text" placeholder="Favorite movie" class="searchBar">
+                <input [(ngModel)]="profileForm.hobby" type="text" placeholder="Hobby" class="searchBar">
+                <input [(ngModel)]="profileForm.smoker" type="text" placeholder="Smoker" class="searchBar">
+
+                <div class="discover-actions">
+                  <button mat-raised-button color="primary" (click)="saveProfile()">
+                    Save
+                  </button>
+
+                  <button mat-raised-button (click)="editMode = false">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- DEFAULT -->
+          <div *ngSwitchDefault class="content-view">
+            <h2 class="section-title">Discover</h2>
+          </div>
+        </ng-container>
       </div>
 
       <div class="right-container">
         <mat-card class="info-card">
-          <h3>New Matches</h3>
+          <h3>Matches</h3>
+
           <div class="match-list">
-            <div class="match-item">
-              <img src="../../../assets/match1.jpg" alt="Sophie">
-              <span>Sophie</span>
-            </div>
-            <div class="match-item">
-              <img src="../../../assets/match2.jpg" alt="Mike">
-              <span>Mike</span>
-            </div>
-            <div class="match-item">
-              <img src="../../../assets/match3.jpg" alt="Emma">
-              <span>Emma</span>
-            </div>
-            <div class="match-item">
-              <div class="more">+3</div>
-              <span>More</span>
+            <div class="match-item" *ngFor="let match of matches" (click)="openChatFromMatch(match)">
+              <img [src]="match.image || 'assets/profile-demo.jpg'" [alt]="match.name">
+              <span>{{ match.name }}</span>
             </div>
           </div>
         </mat-card>
@@ -155,27 +280,12 @@
         <mat-card class="info-card">
           <h3>Messages</h3>
 
-          <div class="message-item">
-            <img src="../../../assets/match2.jpg" alt="John">
-            <div>
-              <h4>John</h4>
-              <p>Hey! How's it going?</p>
-            </div>
-          </div>
+          <div class="message-item" *ngFor="let convo of conversations" (click)="openConversation(convo)">
+            <img [src]="getConversationImage(convo)" [alt]="getConversationName(convo)">
 
-          <div class="message-item">
-            <img src="../../../assets/match1.jpg" alt="Emily">
             <div>
-              <h4>Emily</h4>
-              <p>Are you free tonight?</p>
-            </div>
-          </div>
-
-          <div class="message-item">
-            <img src="../../../assets/match3.jpg" alt="Alex">
-            <div>
-              <h4>Alex</h4>
-              <p>Sent a photo</p>
+              <h4>{{ getConversationName(convo) }}</h4>
+              <p>{{ convo.lastMessage || 'No messages yet' }}</p>
             </div>
           </div>
         </mat-card>

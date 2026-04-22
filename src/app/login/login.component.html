@@ -6,20 +6,24 @@
 
   <div class="middle-container">
     <input
-      type="text"
-      placeholder="Email or Google"
+      type="email"
+      placeholder="Email"
       class="input-field"
+      [(ngModel)]="email"
     />
 
     <input
       type="password"
       placeholder="Password"
       class="input-field"
+      [(ngModel)]="password"
     />
 
-    <button class="btn-signin">
-      Sign In
+    <button class="btn-signin" (click)="signIn()" [disabled]="loading">
+      {{ loading ? 'Signing In...' : 'Sign In' }}
     </button>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 
     <h3>
       <a href="/forgot-password">Forgot password?</a>

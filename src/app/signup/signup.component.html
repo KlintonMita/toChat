@@ -3,18 +3,41 @@
     <h1>ToChat</h1>
     <h2>Single Parent Dating</h2>
   </div>
+
   <div class="middle-container">
-    <button class="btn-email">
-      <img src="../../assets/icons/icons8-email-50.png" /> Continue with email
+    <input
+      type="email"
+      placeholder="Email"
+      class="input-field"
+      [(ngModel)]="email"
+    />
+
+    <input
+      type="password"
+      placeholder="Password"
+      class="input-field"
+      [(ngModel)]="password"
+    />
+
+    <input
+      type="password"
+      placeholder="Confirm Password"
+      class="input-field"
+      [(ngModel)]="confirmPassword"
+    />
+
+    <button class="btn-email" (click)="continueWithEmail()">
+      Continue with email
     </button>
-    <button (click)="goToDetails()" class="btn-google">
-      <img src="../../assets/icons/icons8-gmail-48.png" /> Continue with Google
-    </button>
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
     <h2>We don't share anything without permission</h2>
     <h3>
       Already have an account? <a href="/login">Sign in</a>
     </h3>
   </div>
+
   <div class="bottom-container">
     <div class="bottom-top-container">
       <a href="/impressum">Impressum</a>
@@ -22,6 +45,7 @@
       <a href="/">Dating in Germany</a>
       <a href="/chatSource">Chat in Germany</a>
     </div>
+
     <div class="bottom-last-container">
       <h2>
         By signing up, you agree to our
