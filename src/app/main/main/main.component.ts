@@ -223,17 +223,14 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
-  async likeUser(user: AppUser): Promise<void> {
+  async likeUser(user: AppUser, ): Promise<void> {
     if (!this.currentUser) return;
 
     try {
       const matched = await this.dashboardService.likeUser(this.currentUser.uid, user);
 
       if (matched) {
-        this.successMessage = `It’s a match with ${user.firstName}!`;
         await this.loadMatches();
-      } else {
-        this.successMessage = `You liked ${user.firstName}.`;
       }
     } catch (error) {
       console.error('Like user error:', error);

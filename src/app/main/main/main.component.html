@@ -98,7 +98,7 @@
         <div *ngIf="successMessage" class="success-box">{{ successMessage }}</div>
 
         <ng-container [ngSwitch]="activeTab">
-          <!-- DISCOVER -->
+
           <div *ngSwitchCase="'discover'" class="content-view">
             <h2 class="section-title">Discover People</h2>
 
@@ -124,7 +124,6 @@
             </div>
           </div>
 
-          <!-- MATCHES -->
           <div *ngSwitchCase="'matches'" class="content-view">
             <h2 class="section-title">Your Matches</h2>
 
@@ -141,7 +140,6 @@
             </div>
           </div>
 
-          <!-- MESSAGES -->
           <div *ngSwitchCase="'messages'" class="content-view messages-layout">
             <div class="messages-sidebar">
               <h2 class="section-title">Conversations</h2>
@@ -196,7 +194,6 @@
             </div>
           </div>
 
-          <!-- LIKES -->
           <div *ngSwitchCase="'likes'" class="content-view">
             <h2 class="section-title">People Connected With You</h2>
 
@@ -212,7 +209,6 @@
             </div>
           </div>
 
-          <!-- PROFILE -->
           <div *ngSwitchCase="'profile'" class="content-view">
             <h2 class="section-title">My Profile</h2>
 
@@ -258,7 +254,6 @@
             </mat-card>
           </div>
 
-          <!-- DEFAULT -->
           <div *ngSwitchDefault class="content-view">
             <h2 class="section-title">Discover</h2>
           </div>

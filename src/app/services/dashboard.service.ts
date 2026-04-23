@@ -16,23 +16,6 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { BOT_PROFILES } from './bot-profiles';
-
-export interface AppUser {
-  uid: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  age: string;
-  nationality: string;
-  residence: string;
-  kids: string;
-  favoriteMovie: string;
-  hobby: string;
-  smoker: string;
-  photoURL?: string;
-  createdAt?: string;
-}
-
 export interface MatchItem {
   uid: string;
   name: string;
@@ -223,6 +206,15 @@ async triggerBotReply(
       createdAt: serverTimestamp(),
     });
 
+    const currentUser = await this.getUserById(currentUid);
+    if (!currentUser) return false;
+
+    // bots should auto-match
+    if (targetUser.isBot) {
+      await this.createMatch(currentUser, targetUser);
+      return true;
+    }
+
     const reverseLikeRef = doc(
       this.firestore,
       'likes',
@@ -234,35 +226,35 @@ async triggerBotReply(
     const reverseLikeSnap = await getDoc(reverseLikeRef);
 
     if (reverseLikeSnap.exists()) {
-      const currentUser = await this.getUserById(currentUid);
-      if (!currentUser) return false;
-
-      const currentName = `${currentUser.firstName} ${currentUser.lastName}`;
-      const targetName = `${targetUser.firstName} ${targetUser.lastName}`;
-
-      await setDoc(doc(this.firestore, 'matches', currentUid, 'items', targetUser.uid), {
-        uid: targetUser.uid,
-        name: targetName,
-        image: targetUser.photoURL || 'assets/profile-demo.jpg',
-        residence: targetUser.residence || '',
-        age: targetUser.age || '',
-        createdAt: serverTimestamp(),
-      });
-
-      await setDoc(doc(this.firestore, 'matches', targetUser.uid, 'items', currentUid), {
-        uid: currentUid,
-        name: currentName,
-        image: currentUser.photoURL || 'assets/profile-demo.jpg',
-        residence: currentUser.residence || '',
-        age: currentUser.age || '',
-        createdAt: serverTimestamp(),
-      });
-
+      await this.createMatch(currentUser, targetUser);
       return true;
     }
 
     return false;
-  }
+  };
+
+  private async createMatch(currentUser: AppUser, targetUser: AppUser): Promise<void> {
+    const currentName = `${currentUser.firstName} ${currentUser.lastName}`;
+    const targetName = `${targetUser.firstName} ${targetUser.lastName}`;
+
+    await setDoc(doc(this.firestore, 'matches', currentUser.uid, 'items', targetUser.uid), {
+      uid: targetUser.uid,
+      name: targetName,
+      image: targetUser.photoURL || '/assets/profile-demo.jpg',
+      residence: targetUser.residence || '',
+      age: targetUser.age || '',
+      createdAt: serverTimestamp(),
+    });
+
+    await setDoc(doc(this.firestore, 'matches', targetUser.uid, 'items', currentUser.uid), {
+      uid: currentUser.uid,
+      name: currentName,
+      image: currentUser.photoURL || '/assets/profile-demo.jpg',
+      residence: currentUser.residence || '',
+      age: currentUser.age || '',
+      createdAt: serverTimestamp(),
+    });
+  };
 
   async getMatches(uid: string): Promise<MatchItem[]> {
     const snap = await getDocs(collection(this.firestore, 'matches', uid, 'items'));

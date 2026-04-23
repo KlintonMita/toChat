@@ -353,6 +353,8 @@
   gap: 22px;
 
   .info-card {
+    max-height: 320px;
+    overflow: auto;
     border-radius: 20px;
     padding: 22px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
@@ -366,6 +368,8 @@
   }
 
   .match-list {
+    max-height: 170px;
+    overflow: auto;
     display: flex;
     gap: 18px;
     align-items: flex-start;
@@ -453,7 +457,7 @@
 }
 
 .section-title {
-  margin: 0 0 24px;
+  margin: 10px;
   font-size: 32px;
   font-weight: 700;
   color: #2b2d42;
@@ -487,6 +491,9 @@
 }
 
 .list-card {
+  height: 180px;
+  overflow: auto;
+  margin-bottom: 20px;
   border-radius: 20px;
   padding: 10px 20px;
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
