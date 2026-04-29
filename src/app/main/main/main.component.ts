@@ -210,7 +210,6 @@ export class MainComponent implements OnInit, OnDestroy {
         ...this.profileForm,
       };
 
-      this.successMessage = 'Profile updated successfully.';
       this.editMode = false;
 
       await this.loadDiscoverUsers();
@@ -252,6 +251,39 @@ export class MainComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.error('Open chat error:', error);
       this.errorMessage = 'Failed to open chat.';
+    }
+  }
+
+  async changeProfilePhoto(event: Event): Promise<void> {
+    if (!this.currentUser) return;
+
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+
+    if (!file) return;
+
+    try {
+      this.loading = true;
+      this.errorMessage = '';
+      this.successMessage = '';
+
+      const photoURL = await this.dashboardService.updateProfilePhoto(
+        this.currentUser.uid,
+        file
+      );
+
+      this.currentUser = {
+        ...this.currentUser,
+        photoURL,
+      };
+
+      this.successMessage = 'Profile photo updated successfully.';
+    } catch (error) {
+      console.error('Photo update error:', error);
+      this.errorMessage = 'Failed to update profile photo.';
+    } finally {
+      this.loading = false;
+      input.value = '';
     }
   }
 

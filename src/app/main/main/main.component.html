@@ -213,7 +213,20 @@
             <h2 class="section-title">My Profile</h2>
 
             <mat-card class="profile-details-card" *ngIf="currentUser">
-              <img [src]="profileImage" [alt]="fullName" class="profile-preview">
+
+              <div class="profile-photo-settings">
+                <img [src]="profileImage" [alt]="fullName" class="profile-preview">
+
+                <label class="upload-button" *ngIf="editMode">
+                  Change photo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    (change)="changeProfilePhoto($event)"
+                  />
+                </label>
+              </div>
 
               <div class="profile-details" *ngIf="!editMode">
                 <h3>{{ fullName }}, {{ currentUser.age }}</h3>

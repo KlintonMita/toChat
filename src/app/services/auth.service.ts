@@ -17,14 +17,6 @@ import {
   getDoc,
 } from '@angular/fire/firestore';
 
-import {
-  Storage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from '@angular/fire/storage';
-import { BOT_PROFILES } from './bot-profiles';
-
 export interface SignUpData {
   email: string;
   password: string;
@@ -44,21 +36,9 @@ export interface SignUpData {
   providedIn: 'root',
 })
 export class AuthService {
-  private auth = inject(Auth);
-  private firestore = inject(Firestore);
-  private storage = inject(Storage);
+  private auth: Auth = inject(Auth);
+  private firestore: Firestore = inject(Firestore);
   private router = inject(Router);
-
-  async seedBotProfiles(): Promise<void> {
-    for (const bot of BOT_PROFILES) {
-      const ref = doc(this.firestore, `users/${bot.uid}`);
-      const snap = await getDoc(ref);
-
-      if (!snap.exists()) {
-        await setDoc(ref, bot);
-      }
-    }
-  }
 
   async login(email: string, password: string): Promise<UserCredential> {
     return await signInWithEmailAndPassword(this.auth, email, password);
@@ -72,20 +52,14 @@ export class AuthService {
     );
 
     const uid = userCredential.user.uid;
-    let photoURL = '';
 
-    if (data.photoFile) {
-      const filePath = `profile-images/${uid}/${Date.now()}_${data.photoFile.name}`;
-      const storageRef = ref(this.storage, filePath);
+    const photoURL = data.photoFile
+      ? await this.fileToBase64(data.photoFile)
+      : '';
 
-      await uploadBytes(storageRef, data.photoFile);
-      photoURL = await getDownloadURL(storageRef);
-    }
-
-    await updateProfile(userCredential.user, {
-      displayName: `${data.firstName} ${data.lastName}`,
-      photoURL: photoURL || '',
-    });
+      await updateProfile(userCredential.user, {
+        displayName: `${data.firstName} ${data.lastName}`,
+      });
 
     await setDoc(doc(this.firestore, 'users', uid), {
       uid,
@@ -115,5 +89,15 @@ export class AuthService {
 
     const userDoc = await getDoc(doc(this.firestore, 'users', user.uid));
     return userDoc.exists() ? userDoc.data() : null;
+  }
+
+  // ✅ Base64 helper
+  private fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   }
 }
