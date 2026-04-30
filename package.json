@@ -1,5 +1,5 @@
 {
-  "name": "videocall-app",
+  "name": "toChat",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:videocall-app": "node dist/videocall-app/server/server.mjs"
+    "serve:ssr:videocall-app": "node dist/tochat/server/server.mjs"
   },
   "private": true,
   "dependencies": {
