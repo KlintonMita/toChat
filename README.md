@@ -13,6 +13,15 @@ Angular 17, TypeScript, Firebase, AngularFire, RxJS, SCSS
 - Real-time chat
 - Responsive design
 
+- ## 📷 Screenshots
+
+ <img src="src/assets/git/main.png" width="600"/>
+ <img src="src/assets/git/signin.jpg" width="600"/>
+ <img src="src/assets/git/discover.jpg" width="600"/>
+ <img src="src/assets/git/matches.jpg" width="600"/>
+ <img src="src/assets/git/messages.jpg" width="600"/>
+ <img src="src/assets/git/profile.jpg" width="600"/>
+
 # Dating Chat App
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
