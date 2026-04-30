@@ -1,9 +1,17 @@
--- Dating Website 
--- Sign IN / Sign Up
--- Scroll through matches
--- Discover Matches
--- Text matches 
--- Like , text 
+# toChat — Real-Time Dating Chat App
+
+Angular dating chat application with authentication, user discovery, matching, and real-time messaging.
+
+## Tech Stack
+Angular 17, TypeScript, Firebase, AngularFire, RxJS, SCSS
+
+## Features
+- Sign up and login
+- Discover users
+- Like users
+- Match with users
+- Real-time chat
+- Responsive design
 
 # Dating Chat App
 
