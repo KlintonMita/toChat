@@ -15,11 +15,28 @@ Angular 17, TypeScript, Firebase, AngularFire, RxJS, SCSS
 
 - ## 📷 Screenshots
 
+ ## 📷 Main
+ 
  <img src="src/assets/git/main.png" width="600"/>
+ 
+  ## 📷 Sign In
+  
  <img src="src/assets/git/signin.JPG" width="600"/>
+
+  ## 📷 Discover
+  
  <img src="src/assets/git/discover.JPG" width="600"/>
+
+  ## 📷 Matches
+  
  <img src="src/assets/git/matches.JPG" width="600"/>
+
+  ## 📷 Messages
+  
  <img src="src/assets/git/messages.JPG" width="600"/>
+
+  ## 📷 Profile
+  
  <img src="src/assets/git/profile.JPG" width="600"/>
 
 # Dating Chat App
