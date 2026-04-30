@@ -23,22 +23,22 @@ Angular dating chat application with authentication, user discovery, matching, a
 ## 📷 Screenshots
 
 ### Main
-<img src="src/assets/git/main.png" width="600"/>
+<img src="src/assets/git/main.png" width="500"/>
 
 ### Sign In
-<img src="src/assets/git/signin.JPG" width="600"/>
+<img src="src/assets/git/signin.JPG" width="500"/>
 
 ### Discover
-<img src="src/assets/git/discover.JPG" width="600"/>
+<img src="src/assets/git/discover.JPG" width="500"/>
 
 ### Matches
-<img src="src/assets/git/matches.JPG" width="600"/>
+<img src="src/assets/git/matches.JPG" width="500"/>
 
 ### Messages
-<img src="src/assets/git/messages.JPG" width="600"/>
+<img src="src/assets/git/messages.JPG" width="500"/>
 
 ### Profile
-<img src="src/assets/git/profile.JPG" width="600"/>
+<img src="src/assets/git/profile.JPG" width="500"/>
 
 ## ⚙️ Installation
 
