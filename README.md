@@ -2,6 +2,10 @@
 
 Angular dating chat application with authentication, user discovery, matching, and real-time messaging.
 
+## 🚧 Work in Progress
+- UI improvements planned
+- Performance optimizations ongoing
+
 ## 🚀 Tech Stack
 
 - Angular 17
@@ -45,7 +49,3 @@ Angular dating chat application with authentication, user discovery, matching, a
 ```bash
 npm install
 ng serve
-
-## 🚧 Work in Progress
-- UI improvements planned
-- Performance optimizations ongoing
