@@ -464,6 +464,8 @@
 }
 
 .grid-list {
+  max-height: 670px;
+  overflow: auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 20px;

@@ -8,6 +8,8 @@ import {
   setDoc,
   addDoc,
   updateDoc,
+  deleteDoc,
+  writeBatch,
   query,
   where,
   orderBy,
@@ -87,6 +89,32 @@ export class DashboardService {
     'You have my attention now 👀',
     'Sounds like we could have a great conversation.',
   ];
+
+  async deleteMessage(conversationId: string, messageId: string): Promise<void> {
+    await deleteDoc(
+      doc(this.firestore, 'conversations', conversationId, 'messages', messageId)
+    );
+  }
+
+  async deleteConversation(conversationId: string): Promise<void> {
+    const messagesRef = collection(
+      this.firestore,
+      'conversations',
+      conversationId,
+      'messages'
+    );
+
+    const messagesSnap = await getDocs(messagesRef);
+    const batch = writeBatch(this.firestore);
+
+    messagesSnap.docs.forEach((messageDoc) => {
+      batch.delete(messageDoc.ref);
+    });
+
+    batch.delete(doc(this.firestore, 'conversations', conversationId));
+
+    await batch.commit();
+  };
 
   async seedBotProfiles(): Promise<void> {
     for (const bot of BOT_PROFILES) {

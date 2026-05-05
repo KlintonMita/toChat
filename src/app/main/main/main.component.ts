@@ -287,6 +287,35 @@ export class MainComponent implements OnInit, OnDestroy {
     }
   }
 
+  async deleteMessage(message: ChatMessage): Promise<void> {
+    if (!this.selectedConversationId) return;
+
+    try {
+      await this.dashboardService.deleteMessage(
+        this.selectedConversationId,
+        message.id
+      );
+    } catch (error) {
+      console.error('Delete message error:', error);
+      this.errorMessage = 'Failed to delete message.';
+    }
+  }
+
+  async deleteCurrentConversation(): Promise<void> {
+    if (!this.selectedConversationId) return;
+
+    try {
+      await this.dashboardService.deleteConversation(this.selectedConversationId);
+
+      this.selectedConversationId = '';
+      this.selectedChatUser = null;
+      this.chatMessages = [];
+    } catch (error) {
+      console.error('Delete conversation error:', error);
+      this.errorMessage = 'Failed to delete conversation.';
+    }
+  }
+
   async openChatFromMatch(match: MatchItem): Promise<void> {
     if (!this.currentUser) return;
 

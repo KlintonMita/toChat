@@ -160,9 +160,19 @@
             </div>
 
             <div class="messages-chat">
-              <h2 class="section-title">
-                {{ selectedChatUser ? (selectedChatUser.firstName + ' ' + selectedChatUser.lastName) : '' }}
-              </h2>
+              <div class="chat-header">
+                <h2 class="section-title">
+                  {{ selectedChatUser ? (selectedChatUser.firstName + ' ' + selectedChatUser.lastName) : '' }}
+                </h2>
+
+                <button
+                  *ngIf="selectedChatUser"
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteCurrentConversation()">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
 
               <mat-card class="chat-card">
                 <div class="chat-messages" *ngIf="selectedChatUser; else noChatSelected">
