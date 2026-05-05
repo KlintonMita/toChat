@@ -2,10 +2,17 @@
 
 Angular dating chat application with authentication, user discovery, matching, and real-time messaging.
 
-## Tech Stack
-Angular 17, TypeScript, Firebase, AngularFire, RxJS, SCSS
+## 🚀 Tech Stack
 
-## Features
+- Angular 17
+- TypeScript
+- Firebase
+- AngularFire
+- RxJS
+- SCSS
+
+## ✨ Features
+
 - Sign up and login
 - Discover users
 - Like users
@@ -13,30 +20,28 @@ Angular 17, TypeScript, Firebase, AngularFire, RxJS, SCSS
 - Real-time chat
 - Responsive design
 
-# Dating Chat App
+## 📷 Screenshots
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.10.
+### Main
+<img src="src/assets/git/main.png" width="500"/>
 
-## Development server
+### Sign In
+<img src="src/assets/git/signin.JPG" width="500"/>
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Discover
+<img src="src/assets/git/discover.JPG" width="500"/>
 
-## Code scaffolding
+### Matches
+<img src="src/assets/git/matches.JPG" width="500"/>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Messages
+<img src="src/assets/git/messages.JPG" width="500"/>
 
-## Build
+### Profile
+<img src="src/assets/git/profile.JPG" width="500"/>
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## ⚙️ Installation
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm install
+ng serve
