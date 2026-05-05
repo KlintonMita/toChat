@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ChatComponent } from './sources/chat/chat.component';
 import { HelpSourceComponent } from './sources/help-source/help-source.component';
 import { ImpressumComponent } from './sources/impressum/impressum.component';
 import { TermsAndConditionsComponent } from './sources/terms-and-conditions/terms-and-conditions.component';
@@ -17,7 +16,6 @@ export const routes: Routes = [
   {path: '', component: TopContainerComponent},
   {path: 'login', component: LoginComponent},
   {path: 'signUp', component: SignupComponent},
-  {path: 'chatSource', component: ChatComponent},
   {path: 'helpSource', component: HelpSourceComponent},
   {path: 'impressum', component: ImpressumComponent},
   {path: 'termsC', component: TermsAndConditionsComponent},
